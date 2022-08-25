@@ -1,4 +1,4 @@
-﻿# FlutterRGBColorCreater
+﻿# Flutter Weather App
 
 This project works with user location and weather forecasting services. App provides weather values with different background images. 
 
