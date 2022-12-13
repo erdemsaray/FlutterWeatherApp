@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:weather_app/screens/main_screen.dart';
-import 'package:weather_app/utils/location.dart';
-import 'package:weather_app/utils/weather.dart';
+
+import '../utils/location.dart';
+import '../utils/weather.dart';
+import 'main_screen.dart';
 
 class LoadingScreen extends StatefulWidget {
   const LoadingScreen({Key? key}) : super(key: key);
@@ -16,21 +17,26 @@ class _LoadingScreenState extends State<LoadingScreen> {
 
   Future<void> getLocationData() async {
     locationData = LocationManager();
-    await locationData.getCurrentLocation();
-
-    if (locationData.latitude == null || locationData.longitude == null) {
-      print("Location values error");
-    } else {
-      print("Latitude: ${locationData.latitude}");
-      print("Longitude: ${locationData.longitude}");
+    locationData.latitude = 37.7282;
+    locationData.longitude = 28.6057;
+    try {
+      await locationData.getCurrentLocation();
+    } catch (e) {
+      if (locationData.latitude == null || locationData.longitude == null) {
+        locationData.latitude = 37.4219927;
+        locationData.longitude = -122.0840173;
+      } else {
+        print("Latitude: ${locationData.latitude}");
+        print("Longitude: ${locationData.longitude}");
+      }
     }
   }
 
   void getWeatherData() async {
     await getLocationData();
 
-    WeatherData weatherData = WeatherData(locationData: locationData);
-    await weatherData.getCurrentTemperature();
+    WeatherData weatherData = WeatherData();
+    await weatherData.getCurrentTemperature(locationData);
 
     if (weatherData.currentTemperature == null || weatherData.currentCondition == null) {
       print("Api values error");

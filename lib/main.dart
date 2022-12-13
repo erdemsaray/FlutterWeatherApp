@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:weather_app/screens/loading_screen.dart';
-import 'package:weather_app/screens/main_screen.dart';
+import 'package:provider/provider.dart';
 
-void main() {
-  runApp(const MyApp());
-}
+import 'screens/loading_screen.dart';
+import 'utils/weather.dart';
+
+void main() =>
+    runApp(ChangeNotifierProvider<WeatherData>(create: (BuildContext context) => WeatherData(), child: const MyApp()));
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Weather App',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData.dark(),    
+      theme: ThemeData.dark(),
       home: const LoadingScreen(),
     );
   }

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:weather_app/screens/setting_screen.dart';
-import 'package:weather_app/utils/weather.dart';
+import 'package:provider/provider.dart';
 import 'package:weather_icons/weather_icons.dart';
+
+import '../utils/weather.dart';
+import 'location_select.dart';
+import 'setting_screen.dart';
 
 class MainScreen extends StatefulWidget {
   final WeatherData weatherData;
@@ -22,7 +24,7 @@ class _MainScreenState extends State<MainScreen> {
 
   updateDisplayInfo(WeatherData weatherData) {
     setState(() {
-      temperature = weatherData.currentTemperature.round();
+      temperature = weatherData.currentTemperature?.round();
       WeatherDisplayData? weatherDisplayData = weatherData.getWeatherDisplayData();
       backgroundImage = weatherDisplayData?.weatherImage;
       weatherDisplayIcon = weatherDisplayData?.weatherIcon;
@@ -48,7 +50,7 @@ class _MainScreenState extends State<MainScreen> {
             return SettingsPage();
           }));
         },
-        child: Icon(
+        child: const Icon(
           Icons.settings,
           color: Colors.white,
           size: 50,
@@ -72,7 +74,7 @@ class _MainScreenState extends State<MainScreen> {
             ),
             Center(
               child: Text(
-                "$temperature°C",
+                "${(Provider.of<WeatherData>(context).currentTemperature!).toInt()} °C",
                 style: const TextStyle(
                   color: Colors.white,
                   fontSize: 60,
@@ -81,10 +83,26 @@ class _MainScreenState extends State<MainScreen> {
               ),
             ),
             Center(
-                child: Text(
-              weatherCityName ?? 'Texas',
-              style: TextStyle(fontSize: 50, color: Colors.white, letterSpacing: 5, fontWeight: FontWeight.w300),
+                child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  Provider.of<WeatherData>(context).currentName ?? 'Texas',
+                  style:
+                      const TextStyle(fontSize: 38, color: Colors.white, letterSpacing: 1, fontWeight: FontWeight.w300),
+                ),
+              ],
             )),
+            IconButton(
+                onPressed: () {
+                  Navigator.push(this.context, MaterialPageRoute(builder: (context) {
+                    return const LocationPage();
+                  }));
+                },
+                icon: const Icon(
+                  Icons.edit,
+                  size: 30,
+                ))
           ],
         ),
       ),
@@ -96,14 +114,14 @@ class _MainScreenState extends State<MainScreen> {
 
     setState(() {
       if (sayac == 0) {
-        backgroundImage = AssetImage('assets/sunny.jpg');
-        weatherDisplayIcon = Icon(WeatherIcons.day_sunny, size: 80);
+        backgroundImage = const AssetImage('assets/sunny.jpg');
+        weatherDisplayIcon = const Icon(WeatherIcons.day_sunny, size: 80);
       } else if (sayac == 1) {
-        backgroundImage = AssetImage('assets/rainy.jpg');
-        weatherDisplayIcon = Icon(WeatherIcons.day_rain, size: 80);
+        backgroundImage = const AssetImage('assets/rainy.jpg');
+        weatherDisplayIcon = const Icon(WeatherIcons.day_rain, size: 80);
       } else {
-        backgroundImage = AssetImage('assets/cloudy.jpg');
-        weatherDisplayIcon = Icon(
+        backgroundImage = const AssetImage('assets/cloudy.jpg');
+        weatherDisplayIcon = const Icon(
           WeatherIcons.day_cloudy,
           size: 80,
         );

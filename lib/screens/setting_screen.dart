@@ -35,85 +35,85 @@ class _SettingsPageState extends State<SettingsPage> {
 
   @override
   Widget build(BuildContext context) {
+    double heightSize = MediaQuery.of(context).copyWith().size.height;
     return Scaffold(
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      floatingActionButton: new FloatingActionButton(
-        onPressed: () {
-          setState(() {
-            Navigator.pop(context);
-          });
-        },
-        child: Icon(
-          Icons.sunny,
-          color: Colors.white,
-          size: 40,
-        ),
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        title: const Text("Notification Settings"),
+        centerTitle: true,
+        elevation: 0,
         backgroundColor: Colors.transparent,
       ),
       backgroundColor: Colors.black,
       body: Container(
+        height: heightSize,
         decoration: const BoxDecoration(
             gradient: LinearGradient(begin: Alignment.topRight, end: Alignment.bottomLeft, colors: [
           Color.fromARGB(255, 10, 87, 151),
           Color.fromARGB(255, 47, 125, 50),
         ])),
-        child: Theme(
-            data: ThemeData(brightness: Brightness.dark),
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.all(32.0),
-              child: Container(
-                padding: EdgeInsets.symmetric(vertical: 33),
-                child: Column(
-                  children: <Widget>[
-                    SizedBox(
-                      height: 50,
-                    ),
-                    SwitchListTile(
-                        title: Text(
-                          "Notifications",
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Theme(
+                data: ThemeData(brightness: Brightness.dark),
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.all(32.0),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(vertical: 33),
+                    child: Column(
+                      children: <Widget>[
+                        const SizedBox(
+                          height: 50,
                         ),
-                        value: valueNotification!,
-                        onChanged: (val) {
-                          setState(() {
-                            if (valueNotification == false) {
-                              valueNotification = true;
-                            } else {
-                              valueNotification = false;
-                            }
-                          });
-                        }),
-                    Column(
-                      children: [
+                        SwitchListTile(
+                            title: const Text(
+                              "Notifications",
+                            ),
+                            value: valueNotification!,
+                            onChanged: (val) {
+                              setState(() {
+                                if (valueNotification == false) {
+                                  valueNotification = true;
+                                } else {
+                                  valueNotification = false;
+                                }
+                              });
+                            }),
                         Column(
                           children: [
-                            SizedBox(
-                              height: 35,
+                            Column(
+                              children: [
+                                const SizedBox(
+                                  height: 35,
+                                ),
+                                const Text(
+                                  "Language",
+                                  style: TextStyle(fontSize: 24, color: Colors.white),
+                                ),
+                                LanguageChooseWidget(),
+                              ],
                             ),
-                            Text(
-                              "Language",
-                              style: TextStyle(fontSize: 24, color: Colors.white),
-                            ),
-                            LanguageChooseWidget(),
+                            Column(
+                              children: [
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                const Text(
+                                  "Notification Frequency",
+                                  style: TextStyle(fontSize: 24, color: Colors.white),
+                                ),
+                                AralikSecimiWidget(),
+                              ],
+                            )
                           ],
                         ),
-                        Column(
-                          children: [
-                            SizedBox(
-                              height: 20,
-                            ),
-                            Text(
-                              "Notification Frequency",
-                              style: TextStyle(fontSize: 24, color: Colors.white),
-                            ),
-                            AralikSecimiWidget(),
-                          ],
-                        )
                       ],
                     ),
-                  ],
-                ),
-              ),
-            )),
+                  ),
+                )),
+          ],
+        ),
       ),
     );
   }
@@ -139,7 +139,7 @@ class _AralikSecimiWidgetState extends State<AralikSecimiWidget> {
               radioButtonAralik = value!;
             });
           },
-          title: Text("1/Day"),
+          title: const Text("1/Day"),
         ),
         RadioListTile<int>(
           value: 2,
@@ -149,7 +149,7 @@ class _AralikSecimiWidgetState extends State<AralikSecimiWidget> {
               radioButtonAralik = value!;
             });
           },
-          title: Text("2/Day"),
+          title: const Text("2/Day"),
         ),
         RadioListTile<int>(
           value: 3,
@@ -159,7 +159,7 @@ class _AralikSecimiWidgetState extends State<AralikSecimiWidget> {
               radioButtonAralik = value!;
             });
           },
-          title: Text("3/Day"),
+          title: const Text("3/Day"),
         ),
         RadioListTile<int>(
           value: 4,
@@ -169,7 +169,7 @@ class _AralikSecimiWidgetState extends State<AralikSecimiWidget> {
               radioButtonAralik = value!;
             });
           },
-          title: Text("4/Day"),
+          title: const Text("4/Day"),
         ),
       ],
     );
@@ -187,7 +187,7 @@ class _BildirimSwitchWidgetState extends State<BildirimSwitchWidget> {
   @override
   Widget build(BuildContext context) {
     return SwitchListTile(
-        title: Text(
+        title: const Text(
           "Bildirimler",
         ),
         value: valueNotification!,
@@ -223,7 +223,7 @@ class _LanguageChooseWidgetState extends State<LanguageChooseWidget> {
               radioButtonDil = value!;
             });
           },
-          title: Text("English"),
+          title: const Text("English"),
         ),
         RadioListTile<int>(
           value: 2,
@@ -233,7 +233,7 @@ class _LanguageChooseWidgetState extends State<LanguageChooseWidget> {
               radioButtonDil = value!;
             });
           },
-          title: Text("Turkish"),
+          title: const Text("Turkish"),
         )
       ],
     );
